@@ -11,6 +11,7 @@ An ESP32-based embedded IoT system for motion alarm and remote relay control.
   <a href="#readme"><img src="https://img.shields.io/badge/IoT-Blynk-22C55E?style=flat-square" alt="Blynk badge" /></a>
   <a href="#readme"><img src="https://img.shields.io/badge/Simulation-Wokwi-7C3AED?style=flat-square" alt="Wokwi badge" /></a>
   <a href="#readme"><img src="https://img.shields.io/badge/Status-Portfolio%20Project-F97316?style=flat-square" alt="Status badge" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-111827?style=flat-square" alt="MIT license badge" /></a>
 </p>
 
 ## <a name="preview"></a> Preview
@@ -44,21 +45,22 @@ An ESP32-based embedded IoT system for motion alarm and remote relay control.
 - [Hardware Setup](#hardware-setup)
 - [Blynk Virtual Pins](#blynk-virtual-pins)
 - [Quick Start](#quick-start)
+- [Configuration](#configuration)
 - [Project Structure](#project-structure)
 - [Results & Metrics](#results--metrics)
+- [Design Notes](#design-notes)
 - [Troubleshooting](#troubleshooting)
 - [My Contribution](#my-contribution)
 - [License](#license)
 
 ## <a name="project-highlights"></a> Project Highlights
 
-- Implemented ESP32 firmware using Arduino C/C++ and the Blynk ESP32 library.
-- Read PIR motion sensor input and triggered a buzzer plus yellow LED when alarm mode is active.
-- Controlled two relay channels from both local push buttons and Blynk dashboard switches.
-- Synchronized device states with Blynk virtual pins `V1`, `V2`, `V3`, and `V4`.
-- Designed and simulated the circuit on Wokwi with ESP32, PIR sensor, relay modules, LEDs, buzzer, and buttons.
-- Built a Blynk dashboard with relay switches, alarm mode control, and motion status display.
-- Added Serial Monitor logging for relay states and alarm mode to support debugging.
+- Implemented ESP32 firmware in Arduino C/C++ to handle motion sensing, alarm feedback, relay switching, and Blynk synchronization.
+- Built a dual-control workflow where **2 relay channels** can be toggled from either local push buttons or a Blynk dashboard.
+- Integrated a PIR HC-SR501 motion sensor with a buzzer and yellow LED to create an alarm mode for motion events.
+- Synchronized **4 Blynk virtual pins** (`V1`, `V2`, `V3`, `V4`) for relay state, alarm mode, and alarm status feedback.
+- Designed and simulated the circuit on Wokwi with ESP32, PIR sensor, relay modules, LEDs, buzzer, buttons, and resistor.
+- Added Serial Monitor logging at `115200` baud to support state tracing during simulation and debugging.
 
 ## <a name="tech-stack"></a> Tech Stack
 
@@ -172,12 +174,25 @@ char pass[] = "";
 https://wokwi.com/projects/411967425664926721
 ```
 
+## <a name="configuration"></a> Configuration
+
+Update these values before running the firmware on your own Blynk device.
+
+| Setting | Location | Description |
+| --- | --- | --- |
+| `BLYNK_TEMPLATE_ID` | `sketch.ino` | Blynk template identifier |
+| `BLYNK_TEMPLATE_NAME` | `sketch.ino` | Blynk template name |
+| `BLYNK_AUTH_TOKEN` | `sketch.ino` | Device authentication token, kept as a placeholder in this repository |
+| `ssid` | `sketch.ino` | WiFi network name |
+| `pass` | `sketch.ino` | WiFi password |
+
+The public repository intentionally uses `YOUR_BLYNK_AUTH_TOKEN` instead of a real token. Create a new token in Blynk Console before deploying to hardware.
+
 ## <a name="project-structure"></a> Project Structure
 
 ```text
 .
 |-- sketch.ino                 # Main ESP32 firmware for Wokwi/Arduino
-|-- Code.txt                   # Source copy from the original assignment
 |-- diagram.json               # Wokwi circuit definition
 |-- libraries.txt              # Wokwi library list
 |-- wokwi-project.txt          # Wokwi project note
@@ -196,12 +211,18 @@ https://wokwi.com/projects/411967425664926721
 
 ## <a name="results--metrics"></a> Results & Metrics
 
-- Controlled **2 relay channels** through both physical buttons and Blynk dashboard switches.
-- Synchronized **4 Blynk virtual pins** for relay state, alarm mode, and alarm activity feedback.
-- Checked PIR motion every **1000 ms** using `BlynkTimer` to keep the main loop responsive.
-- Triggered audible/visual alarm feedback for **5 seconds** after motion detection in alarm mode.
+- Achieved dual-path device control by mapping **2 relay outputs** to both physical buttons and Blynk switches.
+- Improved remote visibility by synchronizing **4 virtual pins** for relay state, alarm mode, and alarm activity feedback.
+- Reduced sensor polling complexity by checking PIR motion every **1000 ms** with `BlynkTimer` instead of manual timing in the main loop.
+- Delivered clear alarm feedback by activating buzzer and LED for **5 seconds** after motion detection while alarm mode is enabled.
 - Reduced accidental repeated button toggles with a **300 ms** software debounce delay.
 - Documented the project with **6 visual artifacts** extracted from the report/slide deck: block diagram, hardware model, Blynk dashboards, and PIR simulation.
+
+## <a name="design-notes"></a> Design Notes
+
+- The project prioritizes a simple classroom-friendly firmware structure: `setup()` configures GPIO/Blynk, `loop()` runs Blynk/timer tasks, and helper functions handle buttons, PIR detection, and Serial logging.
+- The alarm routine uses `delay(5000)` after motion detection. This is easy to understand for a course demo, but a production version should replace it with non-blocking timing based on `millis()`.
+- Relay modules can be active-high or active-low depending on the hardware. If the relay behavior is reversed on real hardware, invert the `HIGH` / `LOW` output logic.
 
 ## <a name="troubleshooting"></a> Troubleshooting
 
@@ -221,4 +242,4 @@ https://wokwi.com/projects/411967425664926721
 
 ## <a name="license"></a> License
 
-This repository is prepared as an academic portfolio project. Add a license file before reusing the code in another public project.
+This project is released under the [MIT License](LICENSE).
