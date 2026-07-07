@@ -19,9 +19,24 @@ An ESP32-based embedded IoT system for motion alarm and remote relay control.
 
 > Course project for an Embedded Systems class. The system combines a PIR motion sensor, two relay outputs, local push buttons, LED/buzzer alarm feedback, and a Blynk dashboard for remote control.
 
+## <a name="demo-gallery"></a> Demo Gallery
+
+| System block diagram | Wokwi hardware model |
+| --- | --- |
+| ![System block diagram](docs/images/system-block-diagram.png) | ![Wokwi hardware model](docs/images/wokwi-hardware-model.png) |
+
+| Blynk mobile dashboard | PIR alarm simulation |
+| --- | --- |
+| ![Blynk mobile dashboard](docs/images/blynk-mobile-dashboard.png) | ![PIR alarm simulation](docs/images/pir-alarm-simulation.png) |
+
+| Blynk web dashboard | Wokwi overview |
+| --- | --- |
+| ![Blynk web dashboard](docs/images/blynk-web-dashboard.png) | ![Wokwi overview](docs/images/wokwi-overview.png) |
+
 ## <a name="table-of-contents"></a> Table of Contents
 
 - [Preview](#preview)
+- [Demo Gallery](#demo-gallery)
 - [Project Highlights](#project-highlights)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
@@ -41,7 +56,8 @@ An ESP32-based embedded IoT system for motion alarm and remote relay control.
 - Read PIR motion sensor input and triggered a buzzer plus yellow LED when alarm mode is active.
 - Controlled two relay channels from both local push buttons and Blynk dashboard switches.
 - Synchronized device states with Blynk virtual pins `V1`, `V2`, `V3`, and `V4`.
-- Simulated the circuit on Wokwi with ESP32, PIR sensor, relay modules, LEDs, buzzer, and buttons.
+- Designed and simulated the circuit on Wokwi with ESP32, PIR sensor, relay modules, LEDs, buzzer, and buttons.
+- Built a Blynk dashboard with relay switches, alarm mode control, and motion status display.
 - Added Serial Monitor logging for relay states and alarm mode to support debugging.
 
 ## <a name="tech-stack"></a> Tech Stack
@@ -105,6 +121,12 @@ The firmware keeps the logic simple: Blynk handles remote commands, local button
 
 Wokwi simulation files are included in [`diagram.json`](diagram.json), [`sketch.ino`](sketch.ino), and [`libraries.txt`](libraries.txt).
 
+Simulation link:
+
+```text
+https://wokwi.com/projects/411967425664926721
+```
+
 ## <a name="blynk-virtual-pins"></a> Blynk Virtual Pins
 
 | Virtual Pin | Direction | Function |
@@ -119,7 +141,7 @@ Wokwi simulation files are included in [`diagram.json`](diagram.json), [`sketch.
 1. Clone the repository.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/esp32-motion-relay-blynk.git
+git clone https://github.com/lesongthao/esp32-motion-relay-blynk.git
 cd esp32-motion-relay-blynk
 ```
 
@@ -161,7 +183,13 @@ https://wokwi.com/projects/411967425664926721
 |-- wokwi-project.txt          # Wokwi project note
 |-- docs/
 |   `-- images/
-|       `-- demo-preview.jpg   # Preview image extracted from the demo video
+|       |-- demo-preview.jpg          # Preview image extracted from the demo video
+|       |-- system-block-diagram.png  # System block diagram from the slide deck
+|       |-- wokwi-hardware-model.png  # Wokwi circuit overview
+|       |-- blynk-mobile-dashboard.png
+|       |-- pir-alarm-simulation.png
+|       |-- blynk-web-dashboard.png
+|       `-- wokwi-overview.png
 |-- .gitignore
 `-- README.md
 ```
@@ -173,6 +201,7 @@ https://wokwi.com/projects/411967425664926721
 - Checked PIR motion every **1000 ms** using `BlynkTimer` to keep the main loop responsive.
 - Triggered audible/visual alarm feedback for **5 seconds** after motion detection in alarm mode.
 - Reduced accidental repeated button toggles with a **300 ms** software debounce delay.
+- Documented the project with **6 visual artifacts** extracted from the report/slide deck: block diagram, hardware model, Blynk dashboards, and PIR simulation.
 
 ## <a name="troubleshooting"></a> Troubleshooting
 
