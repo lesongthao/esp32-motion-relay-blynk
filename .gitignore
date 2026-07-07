@@ -1,0 +1,26 @@
+# Local/editor files
+.vscode/
+.idea/
+*.tmp
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Arduino/Wokwi build outputs
+build/
+*.hex
+*.elf
+*.bin
+
+# Keep portfolio repo clean and avoid publishing personal report data
+Báo cáo.pdf
+Slide.pptx
+Readme.txt
+Video.mp4
+
+# Secrets/config generated locally
+.env
+secrets.h
+config.local.h
